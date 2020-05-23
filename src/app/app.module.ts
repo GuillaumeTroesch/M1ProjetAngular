@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { TacheDetailsComponent } from './tache-details/tache-details.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { ListeParJoursComponent } from './liste-par-jours/liste-par-jours.component';
+import { CategorieDetailsComponent } from './categorie-details/categorie-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TacheDetailsComponent,
     AccueilComponent,
-    ListeParJoursComponent
+    ListeParJoursComponent,
+    CategorieDetailsComponent
   ],
   imports: [
     BrowserModule,
