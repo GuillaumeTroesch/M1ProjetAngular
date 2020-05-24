@@ -18,6 +18,16 @@ export class TacheService {
   	return (TACHES);
   }
   
+  getLastIdTache()
+  {
+	  let max = 0;
+	  TACHES.forEach(t => {
+		  if (t.id>max)
+		   max = t.id;
+	  });
+	  return max;
+  }
+  
   getTache(id:number) : Tache {
 	  let res: Tache;
 	  TACHES.forEach(t => {
@@ -48,6 +58,16 @@ export class TacheService {
 
   getCategories(): Categorie[] {
   	return (CATEGORIES);
+  }
+  
+  getLastIdCategorie()
+  {
+	  let max = 0;
+	  CATEGORIES.forEach(c => {
+		  if (c.id>max)
+		   max = c.id;
+	  });
+	  return max;
   }
   
   addTache(tache : Tache): void {

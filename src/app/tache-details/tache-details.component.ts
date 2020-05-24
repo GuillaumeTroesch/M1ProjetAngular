@@ -28,7 +28,7 @@ export class TacheDetailsComponent implements OnInit {
   add(nomTache: string, catId: number): void {
     nomTache = nomTache.trim();
     if (!nomTache) { return; }
-	let t:Tache = {id:4, nom:nomTache, idCategorie:catId, heureDebut: this.service.getTimeNow(), duree:"", dateDebut: this.service.getDateNow()};
+	let t:Tache = {id:this.service.getLastIdTache()+1, nom:nomTache, idCategorie:catId, heureDebut: this.service.getTimeNow(), duree:"", dateDebut: this.service.getDateNow()};
     this.service.addTache(t);
 	this.router.navigateByUrl('/accueil');
   }

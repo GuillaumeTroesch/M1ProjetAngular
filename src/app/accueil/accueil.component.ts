@@ -44,11 +44,14 @@ export class AccueilComponent implements OnInit {
   
   quickStart()
   {
-	let t:Tache = {id:4, nom:"QuickStart", idCategorie:-1, heureDebut: this.service.getTimeNow(), duree:"", dateDebut: this.service.getDateNow()};
+	  
+	let t:Tache = {id: this.service.getLastIdTache()+1, nom:"QuickStart", idCategorie:-1, heureDebut: this.service.getTimeNow(), duree:"", dateDebut: this.service.getDateNow()};
+	this.tachesEnCours.push(t);
+	this.tachesSansCategorie.push(t);
 	this.service.addTache(t);
   }
   
-  stopTache(tacheId:string)
+  stopTache(tacheId)
   {
 	  let t = this.service.getTache(tacheId);
 	  t.duree = this.service.getDuree(t.heureDebut);

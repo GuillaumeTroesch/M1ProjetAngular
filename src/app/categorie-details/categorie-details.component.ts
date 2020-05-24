@@ -20,7 +20,7 @@ export class CategorieDetailsComponent implements OnInit {
   add(nomCategorie: string): void {
     nomCategorie = nomCategorie.trim();
     if (!nomCategorie) { return; }
-	let c:Categorie = {id:4, nom:nomCategorie};
+	let c:Categorie = {id:this.service.getLastIdCategorie()+1, nom:nomCategorie};
     this.service.addCategorie(c);
 	this.router.navigateByUrl('/accueil');
   }
