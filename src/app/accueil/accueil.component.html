@@ -6,7 +6,14 @@
 <div class="table-responsive col-md-4">
 	<table class="table">
 		<tbody>
-			<tr>
+
+      <tr *ngFor="let tache of taches">
+        <th scope="row">7</th>
+        <td>{{tache.id}}</td> 
+        <td>{{tache.nom}}</td>
+      </tr>
+
+<!--	<tr>
 			  <th scope="row">7</th>
 			  <td>Tache en cours 1</td>
 			  <td>Catégorie1</td>
@@ -17,12 +24,20 @@
 			  <td>Tache en cours 2</td>
 			  <td>Catégorie1</td>
 			  <td>00:04</td>
-			</tr>
+			</tr> -->
 		</tbody>
 	</table>
 </div>
 
 <table class="table">
+  <thead>
+    <tr *ngFor="let categorie of categories">
+      <th scope="col">#</th>
+      <th scope="col">{{categorie.nom}}</th> 
+      <th scope="col">temps cumulé</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
   <thead>
     <tr>
       <th scope="col">#</th>
