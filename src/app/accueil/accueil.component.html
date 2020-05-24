@@ -9,7 +9,9 @@
 		  <tr *ngFor="let tache of tachesEnCours" >
 				<th  scope="row">{{tache.id}}</th> 
 				<td>{{tache.nom}}</td>
-				<td>{{service.getDuree(tache.heureDebut)}}</td>
+				<td>{{tache.duree}}</td>
+				<!--<td>{{service.getDuree(tache.heureDebut)}}</td>-->
+				<!--<td>{{compteur[taches.indexOf(tache)]}}</td>-->
 				<td>
 					<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
 				</td>

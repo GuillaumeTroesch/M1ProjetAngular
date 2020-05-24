@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "M1ProjetAngular"
+    }
+  },
+  "defaultProject": "M1ProjetAngular",
+  "cli": {
+    "analytics": false
+  }
 }

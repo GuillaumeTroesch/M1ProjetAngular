@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class TacheDetailsComponent implements OnInit {
-	edit: bool;
+	edit: boolean;
   tache: Tache;
   categories: Categorie[];
 
@@ -34,10 +34,11 @@ export class TacheDetailsComponent implements OnInit {
   }
   
   getTache(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+  const id = this.route.snapshot.paramMap.get('id');
+  let idNum = parseInt(id) 
 	this.edit = id!=null;
 	if (this.edit)
-		this.tache = this.service.getTache(id);
+		this.tache = this.service.getTache(idNum);
   }
 
 }

@@ -4,6 +4,7 @@ import { Tache } from '../tache';
 import { Categorie } from '../categorie';
 
 import { TacheService } from '../tache.service';
+import { Observable, of, Subscription, interval } from 'rxjs';
 
 
 @Component({
@@ -18,9 +19,15 @@ export class AccueilComponent implements OnInit {
   tachesEnCours;
   tachesSansCategorie;
 
+  aboTache : Subscription[] = [];
+  compteur : number[] = [];
+
+
   constructor(private service: TacheService) { }
 
   ngOnInit(): void {
+
+  	  console.log("ind");
 	  this.taches = this.service.getTaches();
 	  // this.service.getTachesEnCours().subscribe(taches => this.tachesEnCours = taches);
 	  // this.service.getTaches().subscribe(taches => this.taches = taches);
@@ -29,7 +36,13 @@ export class AccueilComponent implements OnInit {
 	  this.categories = this.service.getCategories();
 	  this.tachesSansCategorie = this.service.getTachesFromCategorie(-1);
 	  this.tachesEnCours = this.service.getTachesEnCours();
-	  
+
+	  //Abonnements :
+	  this.taches.forEach( e => {
+	  	this.aboTache.push(new Subscription);
+	  	this.compteur.push(0);
+	  });
+
   }
   
   getTachesFromCategorie(idCategorie)
@@ -49,6 +62,21 @@ export class AccueilComponent implements OnInit {
 	this.tachesEnCours.push(t);
 	this.tachesSansCategorie.push(t);
 	this.service.addTache(t);
+	this.taches.push(t);
+	this.aboTache.push(new Subscription);
+  	this.compteur.push(0);
+	this.demarrerTache(t);
+  }
+
+  demarrerTache(tache:Tache) {
+
+  	//if tache.estDemarree {
+  	let indice = this.taches.indexOf(tache);
+  	console.log("ind " + indice);
+  	this.aboTache[indice] = interval(1000).subscribe((valeur : number) => {this.compteur[indice] = valeur});
+  	console.log("compteur " + this.compteur[indice]);
+  	this.taches[indice].duree = this.compteur[indice].toString();
+
   }
   
   stopTache(tacheId)
