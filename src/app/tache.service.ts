@@ -37,23 +37,47 @@ export class TacheService {
 	  return (res); 
   }
   
-  getTachesFromCategorie(idCategorie: number): Tache[]  {
+	getTachesFromCategorie(idCategorie: number): Tache[]  {
 	  let res = [];
 	  TACHES.forEach(t => {
 		  if (t.idCategorie==idCategorie)
 			  res.push(t);
 	  });
 	  return (res);
-  }
+	}
   
-  getTachesEnCours() : Tache[] {
+	getTachesEnCours() : Tache[] {
 	  let res = [];
 	  TACHES.forEach(t => {
 		  if (t.duree=="")
 			  res.push(t);
 	  });
 	  return (res);
-  }
+	}
+	
+	getTachesJour(date:string) : Tache[] {
+		let res = [];
+		TACHES.forEach(t => {
+		  if (t.dateDebut==date)
+			  res.push(t);
+		});
+		return (res);
+	}
+  
+	editTache(tache : Tache): void {
+		let t = this.getTache(tache.id);
+		t.nom=tache.nom;
+		t.idCategorie=tache.idCategorie;
+		t.heureDebut=tache.heureDebut;
+		t.duree=tache.duree;
+		t.dateDebut=tache.dateDebut;
+	}
+	
+	removeTache(idTache : number): void{
+		for (let i=0; i < TACHES.length; i++)
+		if (TACHES[i].id==idTache)
+			{TACHES.splice(i, 1); return;}
+	}
   
 
   getCategories(): Categorie[] {
@@ -82,10 +106,23 @@ export class TacheService {
   getTimeNow(){ return new Date().getHours() + ":"+ new Date().getMinutes()+":"+new Date().getSeconds(); }
   getDuree(tempsDebut: string) {
 	  let d = new Date();
-	  let h = this.mod(parseInt(d.getHours())-parseInt(tempsDebut.split(":")[0]),24); 
-	  let m = this.mod(parseInt(d.getMinutes())-parseInt(tempsDebut.split(":")[1]), 60);
-	  let s = this.mod(parseInt(d.getSeconds())-parseInt(tempsDebut.split(":")[2]), 60);
-	  return h+":"+m+":"+s;
+	  let h = this.mod(d.getHours()-parseInt(tempsDebut.split(":")[0]),24); 
+	  let m = this.mod(d.getMinutes()-parseInt(tempsDebut.split(":")[1]), 60);
+	  let s = this.mod(d.getSeconds()-parseInt(tempsDebut.split(":")[2]), 60);
+	  return (h<10?"0":"")+h+":"+(m<10?"0":"")+m+":"+(s<10?"0":"")+s;
   }
   mod(n, m) { return ((n % m) + m) % m; }
+  sommeDuree(d1:string, d2: string) : string {
+	  if (d1=="") return d2;
+	  if (d2=="") return d1;
+	  let t1 = d1.split(":");
+	  let t2 = d2.split(":");
+	  let r = 0;
+	  let s = parseInt(t1[2]) + parseInt(t2[2]);
+	  if (s>60) {s-=60; r=1;}
+	  let m = parseInt(t1[1]) + parseInt(t2[1]) + r;
+	  if (m>60) {m-=60; r=1;} else r=0;
+	  let h = parseInt(t1[0]) + parseInt(t2[0]) + r;
+	  return (h<10?"0":"")+h+":"+(m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+  }
 }

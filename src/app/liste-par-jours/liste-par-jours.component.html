@@ -4,15 +4,15 @@
 		<thead>
 			<tr>
                 <th>
-					<button type='button' class='btn btn-outline btn-primary'><</button>
+					<button (click)="gotoPrev()" type='button' class='btn btn-outline btn-primary'><</button>
 				</th>
                 <th>
                     <div class='input-group'>
-						<input class='form-control' style='text-align: center' id='datePeriode' name='datePeriode' value='$cur' onchange='refreshDatePeriode(\"$periode\")'>
+						<input  class='form-control' style='text-align: center' [(ngModel)]="today" (change)="gotoDate()">
                     </div>
                 </th>
                 <th>
-					<button type='button' class='btn btn-outline btn-primary'>></button>
+					<button *ngIf="!lastDay" (click)="gotoNext()" type='button' class='btn btn-outline btn-primary'>></button>
 				</th>
 			</tr>
 		</thead>
@@ -20,63 +20,52 @@
 </div>
 
 <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Catégorie1</th>
-      <th scope="col">26:00</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Tache1</td>
-      <td>00:00</td>
-      <td><button class="btn btn-danger">X</button></td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Tache2</td>
-      <td>11:00</td>
-	  <td><button class="btn btn-danger">X</button></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Tache3</td>
-      <td>15:00</td>
-	  <td><button class="btn btn-danger">X</button></td>
-    </tr>
-  </tbody>
-</table>
-
-<table class="table">
-	<thead>
-	<tr>
-      <th scope="col">#</th>
-      <th scope="col">Catégorie2</th>
-      <th scope="col">26:00</th>
-	  <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">4</th>
-      <td>Tache1</td>
-      <td>00:00</td>
-	  <td><button class="btn btn-danger">X</button></td>
-    </tr>
-    <tr>
-      <th scope="row">5</th>
-      <td>Tache2</td>
-      <td>11:00</td>
-	  <td><button class="btn btn-danger">X</button></td>
-    </tr>
-    <tr>
-      <th scope="row">6</th>
-      <td>Tache3</td>
-      <td>15:00</td>
-	  <td><button class="btn btn-danger">X</button></td>
-    </tr>
-  </tbody>
+	<ng-container *ngIf="tachesSansCategorie.length>0">
+		<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Sans catégorie</th> 
+					<th scope="col">{{getTempsTotalCategorie(-1)}}</th>
+					<th scope="col">Action</th>
+				</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let tache of tachesSansCategorie">
+				<th scope="row">{{tache.id}}</th>
+				<td>{{tache.nom}}</td>
+				<td>{{tache.duree}}</td>
+				<td>
+					<ng-container *ngIf="tache.duree==''">
+						<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
+					</ng-container>
+					<button class="btn btn-primary btn-sm" routerLink="/tache/{{tache.id}}">Edit</button>
+					<button (click)="supprTache(tache.id)" class="btn btn-outline-danger btn-sm">X</button>
+				</td>
+			</tr>
+		</tbody>
+	</ng-container>
+	<ng-container *ngFor="let categorie of categories">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">{{categorie.nom}}</th> 
+				<th scope="col">{{getTempsTotalCategorie(categorie.id)}}</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let tache of getTachesFromCategorie(categorie.id)">
+				<th scope="row">{{tache.id}}</th>
+				<td>{{tache.nom}}</td>
+				<td>{{tache.duree}}</td>
+				<td>
+					<ng-container *ngIf="tache.duree==''">
+						<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
+					</ng-container>
+					<button class="btn btn-primary btn-sm" routerLink="/tache/{{tache.id}}">Edit</button>
+					<button (click)="supprTache(tache.id)" class="btn btn-outline-danger btn-sm">X</button>
+				</td>
+			</tr>
+		</tbody>
+	</ng-container>
 </table>
