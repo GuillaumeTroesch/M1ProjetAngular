@@ -46,8 +46,6 @@ export class TacheDetailsComponent implements OnInit {
 		nomTache = nomTache.trim();
 		if (!nomTache) { return; }
 		this.service.editTache({id:this.tache.id, nom:nomTache, idCategorie:catId, heureDebut: heureDebut, duree:duree, dateDebut: dateDebut});
-		// let t = this.service.getTache(this.tache.id);
-		// t =	;
 		this.router.navigateByUrl('/accueil');
 	}
 }

@@ -37,14 +37,14 @@ export class TacheService {
 	  return (res); 
   }
   
-  getTachesFromCategorie(idCategorie: number): Tache[]  {
+	getTachesFromCategorie(idCategorie: number): Tache[]  {
 	  let res = [];
 	  TACHES.forEach(t => {
 		  if (t.idCategorie==idCategorie)
 			  res.push(t);
 	  });
 	  return (res);
-  }
+	}
   
 	getTachesEnCours() : Tache[] {
 	  let res = [];
@@ -53,6 +53,15 @@ export class TacheService {
 			  res.push(t);
 	  });
 	  return (res);
+	}
+	
+	getTachesJour(date:string) : Tache[] {
+		let res = [];
+		TACHES.forEach(t => {
+		  if (t.dateDebut==date)
+			  res.push(t);
+		});
+		return (res);
 	}
   
 	editTache(tache : Tache): void {

@@ -12,11 +12,10 @@ import { TacheService } from '../tache.service';
   styleUrls: ['./accueil.component.css']
 })
 export class AccueilComponent implements OnInit {
-
-  categories;
-  taches;
-  tachesEnCours;
-  tachesSansCategorie;
+  categories: Categorie[];
+  taches: Tache[];
+  tachesEnCours: Tache[];
+  tachesSansCategorie: Tache[];
 
   constructor(private service: TacheService) { }
 
