@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Tache } from '../tache';
-import { TACHES } from '../mock-tache';
 import { Categorie } from '../categorie';
-import { CATEGORIES } from '../mock-categories';
 import { TacheService } from '../tache.service';
+import {Router} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -13,32 +14,30 @@ import { TacheService } from '../tache.service';
 })
 
 export class TacheDetailsComponent implements OnInit {
-
-  taches: Tache[];
+	edit: bool;
+  tache: Tache;
   categories: Categorie[];
 
-  tache: Tache = {
-  	id:1,
-  	nom: 'FaireLeProjet',
-  	idCategorie:1,
-  	dateDebut:"12/12/12;24:00"
-  };
-
-  constructor(private tacheService: TacheService) { }
+  constructor(private service: TacheService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-  	this.getTaches();
-  	this.getCaTegories();
+  	this.getTache();
+  	this.service.getCategories().subscribe(categories => this.categories = categories);
   }
-
-  getTaches(): void {
-  	this.tacheService.getTaches()
-      .subscribe(taches => this.taches = taches);
+  
+  add(nomTache: string, catId: number): void {
+    nomTache = nomTache.trim();
+    if (!nomTache) { return; }
+	let t:Tache = {id:4, nom:nomTache, idCategorie:catId, heureDebut: this.service.getTimeNow(), duree:"", dateDebut: this.service.getDateNow()};
+    this.service.addTache(t);
+	this.router.navigateByUrl('/accueil');
   }
-
-    getCaTegories(): void {
-  	this.tacheService.getTaches()
-      .subscribe(categories => this.categories = categories);
+  
+  getTache(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+	this.edit = id!=null;
+	if (this.edit)
+		this.service.getTache(id).subscribe(tache => this.tache = tache);
   }
 
 }

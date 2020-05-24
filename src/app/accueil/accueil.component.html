@@ -1,108 +1,73 @@
 
 <div class="row col-md-12">
-	<a routerLink="/quickstart" type="button" class="btn btn-success">Quick Start</a>	
+	<button (click)="quickStart()" class="btn btn-success">Quick Start</button>	
 </div>
 
 <div class="table-responsive col-md-4">
 	<table class="table">
 		<tbody>
+		  <tr *ngFor="let tache of tachesEnCours" >
+				<th  scope="row">{{tache.id}}</th> 
+				<td>{{tache.nom}}</td>
+				<td>{{service.getDuree(tache.heureDebut)}}</td>
+				<td>
+					<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
+					<button class="btn btn-primary btn-sm" routerLink="/tache/{{tache.id}}">Edit</button>
+					<button class="btn btn-danger btn-sm">X</button>
+				</td>
+		  </tr>
 
-      <tr *ngFor="let tache of taches">
-        <th scope="row">7</th>
-        <td>{{tache.id}}</td> 
-        <td>{{tache.nom}}</td>
-      </tr>
-
-<!--	<tr>
-			  <th scope="row">7</th>
-			  <td>Tache en cours 1</td>
-			  <td>Catégorie1</td>
-			  <td>00:21</td>
-			</tr>
-			<tr>
-			  <th scope="row">8</th>
-			  <td>Tache en cours 2</td>
-			  <td>Catégorie1</td>
-			  <td>00:04</td>
-			</tr> -->
 		</tbody>
 	</table>
 </div>
 
 <table class="table">
-  <thead>
-    <tr *ngFor="let categorie of categories">
-      <th scope="col">#</th>
-      <th scope="col">{{categorie.nom}}</th> 
-      <th scope="col">temps cumulé</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Catégorie1</th>
-      <th scope="col">26:00</th>
-	  <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Tache1</td>
-      <td>00:00</td>
-	  <td><button class="btn btn-danger">X</button></td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Tache2</td>
-      <td>11:00</td>
-	  <td><button class="btn btn-danger">X</button></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Tache3</td>
-      <td>15:00</td>
-	  <td><button class="btn btn-danger">X</button></td>
-    </tr>
-  </tbody>
+	<ng-container *ngIf="tachesSansCategorie.length>0">
+		<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Sans catégorie</th> 
+					<th scope="col">Durée</th>
+					<th scope="col">Action</th>
+				</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let tache of tachesSansCategorie">
+				<th scope="row">{{tache.id}}</th>
+				<td>{{tache.nom}}</td>
+				<td>{{tache.duree}}</td>
+				<td>
+					<ng-container *ngIf="tache.duree==''">
+						<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
+					</ng-container>
+					<button class="btn btn-primary btn-sm" routerLink="/tache/{{tache.id}}">Edit</button>
+					<button class="btn btn-danger btn-sm">X</button>
+				</td>
+			</tr>
+		</tbody>
+	</ng-container>
+	<ng-container *ngFor="let categorie of categories">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">{{categorie.nom}}</th> 
+				<th scope="col">Durée</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let tache of getTachesFromCategorie(categorie.id)">
+				<th scope="row">{{tache.id}}</th>
+				<td>{{tache.nom}}</td>
+				<td>{{tache.duree}}</td>
+				<td>
+					<ng-container *ngIf="tache.duree==''">
+						<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
+					</ng-container>
+					<button class="btn btn-primary btn-sm" routerLink="/tache/{{tache.id}}">Edit</button>
+					<button class="btn btn-danger btn-sm">X</button>
+				</td>
+			</tr>
+		</tbody>
+	</ng-container>
 </table>
-
-<table class="table">
-	<thead>
-	<tr>
-      <th scope="col">#</th>
-      <th scope="col">Catégorie2</th>
-      <th scope="col">26:00</th>
-	  <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">4</th>
-      <td>Tache1</td>
-      <td>00:00</td>
-	  <td><button class="btn btn-danger">X</button></td>
-    </tr>
-    <tr>
-      <th scope="row">5</th>
-      <td>Tache2</td>
-      <td>11:00</td>
-	  <td><button class="btn btn-danger">X</button></td>
-    </tr>
-    <tr>
-      <th scope="row">6</th>
-      <td>Tache3</td>
-      <td>15:00</td>
-	  <td><button class="btn btn-danger">X</button></td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- <div class="row"> -->
-	<!-- <div class="col-sm-4"> -->
-		<!-- <label class="form-label" style="text-aling: right">Exporter par mail</label> -->
-		<!-- <input type="text" class="form-control" placeholder="email@email.com"> -->
-		<!-- <button class="btn btn-outline-success">Send</button> -->
-	<!-- </div> -->
-<!-- </div> -->

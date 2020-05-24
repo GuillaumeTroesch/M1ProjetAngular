@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Tache } from '../tache';
-import { TACHES } from '../mock-tache';
 import { Categorie } from '../categorie';
-import { CATEGORIES } from '../mock-categories';
+
+import { TacheService } from '../tache.service';
+
 
 @Component({
   selector: 'app-accueil',
@@ -11,18 +13,43 @@ import { CATEGORIES } from '../mock-categories';
 })
 export class AccueilComponent implements OnInit {
 
-  categories = CATEGORIES;
-  taches = TACHES;
-    tache: Tache = {
-  	id:1,
-  	nom: 'FaireLeProjet',
-  	idCategorie:1,
-  	dateDebut:"12/12/12;24:00"
-  };
+  categories;
+  taches;
+  tachesEnCours;
+  tachesSansCategorie;
 
-  constructor() { }
+  constructor(private service: TacheService) { }
 
   ngOnInit(): void {
+	  this.service.getTachesEnCours().subscribe(taches => this.tachesEnCours = taches);
+	  this.service.getTaches().subscribe(taches => this.taches = taches);
+	  this.service.getTachesFromCategorie(-1).subscribe(taches => this.tachesSansCategorie = taches);
+	  
+	  this.service.getCategories().subscribe(categories => this.categories = categories);
   }
-
+  
+  getTachesFromCategorie(idCategorie)
+  {
+	  let res = []; 
+	  this.taches.forEach(tache => {
+		  if (tache.idCategorie==idCategorie)
+			  res.push(tache)
+	  });
+	  return res;
+  }
+  
+  quickStart()
+  {
+	let t:Tache = {id:4, nom:"QuickStart", idCategorie:-1, heureDebut: this.service.getTimeNow(), duree:"", dateDebut: this.service.getDateNow()};
+	this.service.addTache(t);
+  }
+  
+  stopTache(tacheId:string)
+  {
+	  let t;
+	  this.service.getTache(tacheId).subscribe(tache => t = tache);
+	  t.duree = this.service.getDuree(t.heureDebut);
+  }
+  
+  
 }

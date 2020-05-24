@@ -11,6 +11,7 @@ const routes: Routes = [
 	{ path: '', redirectTo: '/accueil', pathMatch: 'full'},
 	{ path: 'accueil', component: AccueilComponent },
 	{ path: 'tache', component: TacheDetailsComponent },
+	{ path: 'tache/:id', component: TacheDetailsComponent },
 	{ path: 'categorie', component: CategorieDetailsComponent },
 	{ path: 'parJours', component: ListeParJoursComponent }
 ];
