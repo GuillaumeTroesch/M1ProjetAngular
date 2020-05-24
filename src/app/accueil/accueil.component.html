@@ -9,7 +9,7 @@
 		  <tr *ngFor="let tache of tachesEnCours" >
 				<th  scope="row">{{tache.id}}</th> 
 				<td>{{tache.nom}}</td>
-				<td>{{service.getDuree(tache.heureDebut)}}</td>
+				<td>{{getDuree(tache.heureDebut)}}</td>
 				<td>
 					<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
 				</td>
@@ -25,7 +25,7 @@
 				<tr>
 					<th scope="col">#</th>
 					<th scope="col">Sans catégorie</th> 
-					<th scope="col">Durée</th>
+					<th scope="col">{{getTempsTotalCategorie(-1)}}</th>
 					<th scope="col">Action</th>
 				</tr>
 		</thead>
@@ -38,8 +38,8 @@
 					<ng-container *ngIf="tache.duree==''">
 						<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
 					</ng-container>
-					<button class="btn btn-primary btn-sm" routerLink="/tache/{{tache.id">Edit</button>
-					<button class="btn btn-danger btn-sm">X</button>
+					<button class="btn btn-primary btn-sm" routerLink="/tache/{{tache.id}}">Edit</button>
+					<button (click)="supprTache(tache.id)" class="btn btn-outline-danger btn-sm">X</button>
 				</td>
 			</tr>
 		</tbody>
@@ -49,7 +49,7 @@
 			<tr>
 				<th scope="col">#</th>
 				<th scope="col">{{categorie.nom}}</th> 
-				<th scope="col">Durée</th>
+				<th scope="col">{{getTempsTotalCategorie(categorie.id)}}</th>
 				<th scope="col">Action</th>
 			</tr>
 		</thead>
@@ -63,7 +63,7 @@
 						<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
 					</ng-container>
 					<button class="btn btn-primary btn-sm" routerLink="/tache/{{tache.id}}">Edit</button>
-					<button class="btn btn-danger btn-sm">X</button>
+					<button (click)="supprTache(tache.id)" class="btn btn-outline-danger btn-sm">X</button>
 				</td>
 			</tr>
 		</tbody>

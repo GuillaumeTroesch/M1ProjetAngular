@@ -4,14 +4,14 @@
 		<div class="form-group row">
 			<label class="col-sm-2 col-form-label">Id</label>
 			<div class="col-sm-10">
-			  <input type="text" readonly class="form-control" placeholder="nom" value="9">
+				<input type="text" readonly class="form-control" placeholder="Id" value={{tache.id}}>
 			</div>
 		</div>
 
 		<div class="form-group row">
 			<label class="col-sm-2 col-form-label">Nom</label>
 			<div class="col-sm-10">
-			  <input #nomTache type="text" class="form-control" placeholder="Tâche">
+			  <input #nomTache type="text" class="form-control" placeholder="Tâche" value={{tache.nom}}>
 			</div>
 		</div>
 
@@ -27,35 +27,50 @@
 			</div>
 		</div>
 		
-		<ng-container *ngIf="!edit">
+		<ng-container *ngIf="!edition">
 		<button class="btn btn-success" (click)="add(nomTache.value, catId.value)">Ajouter</button>
 		</ng-container>
 		
-		<ng-container *ngIf="edit">
+		<ng-container *ngIf="edition">
 		<div class="form-group row">
 			<label class="col-sm-2 col-form-label">Heure</label>
 			<div class="col-sm-10">
-			  <input #heureTache type="text" class="form-control" placeholder="00:00:00">
+			  <input #heureTache type="text" class="form-control" placeholder="00:00:00" value={{tache.heureDebut}}>
 			</div>
 		</div>
 		
 		<div class="form-group row">
-			<label class="col-sm-2 col-form-label">Heure</label>
+			<label class="col-sm-2 col-form-label">Duree</label>
 			<div class="col-sm-10">
-			  <input #duree type="text" class="form-control" placeholder="Laisser vide si en cours">
+			  <input #duree type="text" class="form-control" placeholder="Laisser vide si en cours" value={{tache.duree}}>
 			</div>
 		</div>
 		
 		<div class="form-group row">
 			<label class="col-sm-2 col-form-label">Date</label>
 			<div class="col-sm-10">
-			  <input #dateTache type="text" class="form-control" placeholder="24/04">
+			  <input #dateTache data-provide="datepicker" type="text" class="form-control" placeholder="24/04" value={{tache.dateDebut}}>
 			</div>
 		</div>
-		<button class="btn btn-success" (click)="add(nomTache.value, catId.value, heureTache.value, dateTache.value)">Modifier</button>
+		<button class="btn btn-success" (click)="edit(nomTache.value, catId.value, heureTache.value, duree.value, dateTache.value)">Modifier</button>
 		
 		</ng-container>
 		
 		
 	</form>
 </div>
+
+<script>
+$(document).ready(function(){
+    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+        language:'fr',
+        weekStart:1,
+        endDate: 'now'
+    });
+</script>
