@@ -14,45 +14,42 @@ export class TacheService {
 
   constructor() { }
 
-  getTaches(): Observable<Tache[]>  {
-  	return of(TACHES);
+  getTaches(): Tache[]  {
+  	return (TACHES);
   }
   
-  getTache(id:number) : Observable<Tache> {
+  getTache(id:number) : Tache {
 	  let res: Tache;
 	  TACHES.forEach(t => {
 		  if (t.id==id)
 		  { res = t; return;} //return <=> break ici
 	  });
-	  return of(res); 
+	  return (res); 
   }
   
-  getTachesFromCategorie(idCategorie: number): Observable<Tache[]>  {
+  getTachesFromCategorie(idCategorie: number): Tache[]  {
 	  let res = [];
 	  TACHES.forEach(t => {
 		  if (t.idCategorie==idCategorie)
 			  res.push(t);
 	  });
-	  return of(res);
+	  return (res);
   }
   
-  getTachesEnCours() : Observable<Tache[]> {
+  getTachesEnCours() : Tache[] {
 	  let res = [];
 	  TACHES.forEach(t => {
 		  if (t.duree=="")
 			  res.push(t);
 	  });
-	  return of(res);
+	  return (res);
   }
   
 
-  getCategories(): Observable<Categorie[]> {
-  	return of(CATEGORIES);
+  getCategories(): Categorie[] {
+  	return (CATEGORIES);
   }
   
-  
-
-//(**Temporaire**) ajouter une tache
   addTache(tache : Tache): void {
   	TACHES.push(tache);
   }
@@ -65,10 +62,10 @@ export class TacheService {
   getTimeNow(){ return new Date().getHours() + ":"+ new Date().getMinutes()+":"+new Date().getSeconds(); }
   getDuree(tempsDebut: string) {
 	  let d = new Date();
-	  let h = (parseInt(d.getHours())-parseInt(tempsDebut.split(":")[0]))%24;
-	  let m = (parseInt(d.getMinutes())-parseInt(tempsDebut.split(":")[1])%60);
-	  let s = (parseInt(d.getSeconds())-parseInt(tempsDebut.split(":")[2])%60);
+	  let h = this.mod(parseInt(d.getHours())-parseInt(tempsDebut.split(":")[0]),24); 
+	  let m = this.mod(parseInt(d.getMinutes())-parseInt(tempsDebut.split(":")[1]), 60);
+	  let s = this.mod(parseInt(d.getSeconds())-parseInt(tempsDebut.split(":")[2]), 60);
 	  return h+":"+m+":"+s;
   }
-
+  mod(n, m) { return ((n % m) + m) % m; }
 }

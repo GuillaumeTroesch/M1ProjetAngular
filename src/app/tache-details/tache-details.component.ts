@@ -22,7 +22,7 @@ export class TacheDetailsComponent implements OnInit {
 
   ngOnInit(): void {
   	this.getTache();
-  	this.service.getCategories().subscribe(categories => this.categories = categories);
+  	this.categories = this.service.getCategories();
   }
   
   add(nomTache: string, catId: number): void {
@@ -37,7 +37,7 @@ export class TacheDetailsComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
 	this.edit = id!=null;
 	if (this.edit)
-		this.service.getTache(id).subscribe(tache => this.tache = tache);
+		this.tache = this.service.getTache(id);
   }
 
 }

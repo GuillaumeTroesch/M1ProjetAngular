@@ -21,11 +21,15 @@ export class AccueilComponent implements OnInit {
   constructor(private service: TacheService) { }
 
   ngOnInit(): void {
-	  this.service.getTachesEnCours().subscribe(taches => this.tachesEnCours = taches);
-	  this.service.getTaches().subscribe(taches => this.taches = taches);
-	  this.service.getTachesFromCategorie(-1).subscribe(taches => this.tachesSansCategorie = taches);
+	  this.taches = this.service.getTaches();
+	  // this.service.getTachesEnCours().subscribe(taches => this.tachesEnCours = taches);
+	  // this.service.getTaches().subscribe(taches => this.taches = taches);
+	  // this.service.getTachesFromCategorie(-1).subscribe(taches => this.tachesSansCategorie = taches);
 	  
-	  this.service.getCategories().subscribe(categories => this.categories = categories);
+	  this.categories = this.service.getCategories();
+	  this.tachesSansCategorie = this.service.getTachesFromCategorie(-1);
+	  this.tachesEnCours = this.service.getTachesEnCours();
+	  
   }
   
   getTachesFromCategorie(idCategorie)
@@ -46,8 +50,7 @@ export class AccueilComponent implements OnInit {
   
   stopTache(tacheId:string)
   {
-	  let t;
-	  this.service.getTache(tacheId).subscribe(tache => t = tache);
+	  let t = this.service.getTache(tacheId);
 	  t.duree = this.service.getDuree(t.heureDebut);
   }
   
