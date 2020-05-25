@@ -87,11 +87,11 @@ export class ListeParJoursComponent implements OnInit {
 		t.duree = this.service.getDuree(t.heureDebut);
 	}
   
-  getDuree(heureDebut)
-  { return this.service.getDuree(heureDebut); }
-  
-  supprTache(idTache:number)
-  { this.service.removeTache(idTache); this.init(); }
+	getDuree(heureDebut)
+	{ return this.service.getDuree(heureDebut); }
+
+	supprTache(idTache:number)
+	{ this.service.removeTache(idTache); this.init(); }
 	
 
 }

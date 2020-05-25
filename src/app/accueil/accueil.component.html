@@ -9,11 +9,9 @@
 		  <tr *ngFor="let tache of tachesEnCours" >
 				<th  scope="row">{{tache.id}}</th> 
 				<td>{{tache.nom}}</td>
-				<!--<td>{{tache.duree}}</td>-->
-				<td>{{ afficherTemps(tache) }}</td>
-				<!--<td>{{service.getDuree(tache.heureDebut)}}</td>-->
+				<td>{{tache.duree}}</td>
 				<td>
-					<button (click)="stopTacheEnCours(tache)" class="btn btn-warning btn-sm">Stop</button>
+					<button (click)="stopTache(tache)" class="btn btn-warning btn-sm">Stop</button>
 				</td>
 		  </tr>
 
@@ -37,11 +35,11 @@
 				<td>{{tache.nom}}</td>
 				<td>{{tache.duree}}</td>
 				<td>
-					<ng-container *ngIf="!tache.enCours">
-						<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
+					<ng-container *ngIf="tache.enCours">
+						<button (click)="stopTache(tache)" class="btn btn-warning btn-sm">Stop</button>
 					</ng-container>
 					<button class="btn btn-primary btn-sm" routerLink="/tache/{{tache.id}}">Edit</button>
-					<button (click)="supprTache(tache.id)" class="btn btn-outline-danger btn-sm">X</button>
+					<button (click)="supprTache(tache)" class="btn btn-outline-danger btn-sm">X</button>
 				</td>
 			</tr>
 		</tbody>
@@ -61,11 +59,11 @@
 				<td>{{tache.nom}}</td>
 				<td>{{tache.duree}}</td>
 				<td>
-					<ng-container *ngIf="tache.duree==''">
-						<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
+					<ng-container *ngIf="tache.enCours">
+						<button (click)="stopTache(tache)" class="btn btn-warning btn-sm">Stop</button>
 					</ng-container>
 					<button class="btn btn-primary btn-sm" routerLink="/tache/{{tache.id}}">Edit</button>
-					<button (click)="supprTache(tache.id)" class="btn btn-outline-danger btn-sm">X</button>
+					<button (click)="supprTache(tache)" class="btn btn-outline-danger btn-sm">X</button>
 				</td>
 			</tr>
 		</tbody>

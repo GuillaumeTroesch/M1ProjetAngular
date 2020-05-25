@@ -35,7 +35,7 @@
 				<td>{{tache.nom}}</td>
 				<td>{{tache.duree}}</td>
 				<td>
-					<ng-container *ngIf="tache.duree==''">
+					<ng-container *ngIf="tache.enCours">
 						<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
 					</ng-container>
 					<button class="btn btn-primary btn-sm" routerLink="/tache/{{tache.id}}">Edit</button>
@@ -59,7 +59,7 @@
 				<td>{{tache.nom}}</td>
 				<td>{{tache.duree}}</td>
 				<td>
-					<ng-container *ngIf="tache.duree==''">
+					<ng-container *ngIf="tache.enCours">
 						<button (click)="stopTache(tache.id)" class="btn btn-warning btn-sm">Stop</button>
 					</ng-container>
 					<button class="btn btn-primary btn-sm" routerLink="/tache/{{tache.id}}">Edit</button>

@@ -5,14 +5,18 @@ import { TACHES } from './mock-tache';
 import { Categorie } from './categorie';
 import { CATEGORIES } from './mock-categories';
 
-import { Observable, of } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TacheService {
 
-  constructor() { }
+   mapObserver: Map<number, Subscription>;
+
+  constructor() { 
+	this.mapObserver = new Map<number, Subscription>();
+  }
 
   getTaches(): Tache[]  {
   	return (TACHES);
@@ -96,18 +100,29 @@ export class TacheService {
   
   addTache(tache : Tache): void {
   	TACHES.push(tache);
+	this.mapObserver.set(tache.id, interval(1000).subscribe((valeur : number) => {
+          tache.duree = this.getNextDuree(tache.duree)
+        }));
+		console.log(this.mapObserver);
   }
   addCategorie(categorie : Categorie): void {
   	CATEGORIES.push(categorie);
+  }
+  
+  stopTache(idTache: number): void {
+	  this.mapObserver.get(idTache).unsubscribe();
   }
   
   getDateNow(){ return new Date().toISOString().slice(0,10); }
   getTimeNow(){ return new Date().getHours() + ":"+ new Date().getMinutes()+":"+new Date().getSeconds(); }
   getDuree(tempsDebut: string) {
 	  let d = new Date();
-	  let h = this.mod(d.getHours()-parseInt(tempsDebut.split(":")[0]),24); 
-	  let m = this.mod(d.getMinutes()-parseInt(tempsDebut.split(":")[1]), 60);
-	  let s = this.mod(d.getSeconds()-parseInt(tempsDebut.split(":")[2]), 60);
+	  let r = 0;
+	  let s = d.getSeconds()-parseInt(tempsDebut.split(":")[2]);
+	  if (s<0) {s+=60; r=1;}
+	  let m = d.getMinutes()-parseInt(tempsDebut.split(":")[1])-r;
+	  if (m<0) {m+=60; r=1;} else r=0;
+	  let h = d.getHours()-parseInt(tempsDebut.split(":")[0])-r; 
 	  return (h<10?"0":"")+h+":"+(m<10?"0":"")+m+":"+(s<10?"0":"")+s;
   }
 
@@ -118,7 +133,6 @@ export class TacheService {
   	let s = parseInt(dureeSplit[2]);
   	let m = parseInt(dureeSplit[1]);
   	let h = parseInt(dureeSplit[0]);
-  	console.log("s : " + s + " m : " + m + " h : " + h);
   	if( (s + 1) % 60 == 0) {
   		s = 0;
   		if((m + 1) % 60 == 0) {
@@ -134,8 +148,6 @@ export class TacheService {
   	return (h<10?"0":"")+h+":"+(m<10?"0":"")+m+":"+(s<10?"0":"")+s;
 
   }
-
-
 
   mod(n, m) { return ((n % m) + m) % m; }
   sommeDuree(d1:string, d2: string) : string {

@@ -38,7 +38,7 @@ export class TacheDetailsComponent implements OnInit {
 	  
 	getTache(): void {
 		const id = this.route.snapshot.paramMap.get('id');
-		let idNum = parseInt(id) 
+		let idNum = parseInt(id);
 		this.edit1 = id!=null;
 		if (this.edit)
 			this.tache = this.service.getTache(idNum);
@@ -48,7 +48,7 @@ export class TacheDetailsComponent implements OnInit {
 	add(nomTache: string, catId: number): void {
 		nomTache = nomTache.trim();
 		if (!nomTache) { return; }
-		let t:Tache = {id:this.service.getLastIdTache()+1, nom:nomTache, idCategorie:catId, enCours:true, heureDebut: this.service.getTimeNow(), duree:"", dateDebut: this.service.getDateNow()};
+		let t:Tache = {id:this.service.getLastIdTache()+1, nom:nomTache, idCategorie:catId, enCours:true, heureDebut: this.service.getTimeNow(), duree:"00:00:00", dateDebut: this.service.getDateNow()};
 		this.service.addTache(t);
 		this.router.navigateByUrl('/accueil');
 	}
