@@ -103,7 +103,6 @@ export class TacheService {
 	this.mapObserver.set(tache.id, interval(1000).subscribe((valeur : number) => {
           tache.duree = this.getNextDuree(tache.duree)
         }));
-		console.log(this.mapObserver);
   }
   addCategorie(categorie : Categorie): void {
   	CATEGORIES.push(categorie);

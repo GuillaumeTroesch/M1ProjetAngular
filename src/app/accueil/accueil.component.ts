@@ -86,7 +86,6 @@ export class AccueilComponent implements OnInit {
   
   supprTache(tache:Tache)
   { 
-	console.log(tache);
     this.taches = this.taches.filter(t => t !== tache);
     this.service.removeTache(tache.id); 
     this.init(); 
