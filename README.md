@@ -1,3 +1,9 @@
+POINTEL Arthur
+TROESCH Guillaume
+
+Pensez à générer aussi bootstrap par la commande : 
+npm install bootstrap
+
 # M1ProjetAngular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.6.

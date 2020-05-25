@@ -19,10 +19,10 @@
 			<label class="col-sm-2 col-form-label">Catégorie</label>
 			<div class="col-sm-10">
 				<select #catId class="form-control">
-				  <option *ngFor="let categorie of categories" [value]="categorie.id">
-				  	{{categorie.nom}}
-				  </option>
-
+					<option value="-1">Aucune</option>
+					<option *ngFor="let categorie of categories" [value]="categorie.id" [selected]="categorie.id == tache.idCategorie">
+					{{categorie.nom}}
+					</option>
 				</select>
 			</div>
 		</div>
@@ -60,17 +60,17 @@
 	</form>
 </div>
 
-<script>
-$(document).ready(function(){
-    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+<!-- <script> -->
+<!-- $(document).ready(function(){ -->
+    <!-- var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body"; -->
 
-    $('.datepicker').datepicker({
-        format: 'yyyy-mm-dd',
-        container: container,
-        todayHighlight: true,
-        autoclose: true,
-        language:'fr',
-        weekStart:1,
-        endDate: 'now'
-    });
-</script>
+    <!-- $('.datepicker').datepicker({ -->
+        <!-- format: 'yyyy-mm-dd', -->
+        <!-- container: container, -->
+        <!-- todayHighlight: true, -->
+        <!-- autoclose: true, -->
+        <!-- language:'fr', -->
+        <!-- weekStart:1, -->
+        <!-- endDate: 'now' -->
+    <!-- }); -->
+<!-- </script> -->
