@@ -49,7 +49,7 @@ export class TacheService {
 	getTachesEnCours() : Tache[] {
 	  let res = [];
 	  TACHES.forEach(t => {
-		  if (t.duree=="")
+		  if (t.enCours)
 			  res.push(t);
 	  });
 	  return (res);
@@ -73,7 +73,7 @@ export class TacheService {
 		t.dateDebut=tache.dateDebut;
 	}
 	
-	removeTache(idTache : number): void{
+	removeTache(idTache:number): void{
 		for (let i=0; i < TACHES.length; i++)
 		if (TACHES[i].id==idTache)
 			{TACHES.splice(i, 1); return;}
@@ -101,7 +101,6 @@ export class TacheService {
   	CATEGORIES.push(categorie);
   }
   
-  
   getDateNow(){ return new Date().toISOString().slice(0,10); }
   getTimeNow(){ return new Date().getHours() + ":"+ new Date().getMinutes()+":"+new Date().getSeconds(); }
   getDuree(tempsDebut: string) {
@@ -111,6 +110,33 @@ export class TacheService {
 	  let s = this.mod(d.getSeconds()-parseInt(tempsDebut.split(":")[2]), 60);
 	  return (h<10?"0":"")+h+":"+(m<10?"0":"")+m+":"+(s<10?"0":"")+s;
   }
+
+  getNextDuree(duree:string) : string {
+
+  	let nextDuree;
+  	let dureeSplit = duree.split(":");
+  	let s = parseInt(dureeSplit[2]);
+  	let m = parseInt(dureeSplit[1]);
+  	let h = parseInt(dureeSplit[0]);
+  	console.log("s : " + s + " m : " + m + " h : " + h);
+  	if( (s + 1) % 60 == 0) {
+  		s = 0;
+  		if((m + 1) % 60 == 0) {
+  			m = 0;
+  			h = h + 1;
+  		}
+  		else 
+  			m = m + 1;
+  	}
+  	else 
+  		s = s + 1;
+  	
+  	return (h<10?"0":"")+h+":"+(m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+
+  }
+
+
+
   mod(n, m) { return ((n % m) + m) % m; }
   sommeDuree(d1:string, d2: string) : string {
 	  if (d1=="") return d2;

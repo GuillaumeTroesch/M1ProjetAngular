@@ -44,3 +44,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+src/app/accueil/accueil.component_REMOTE_14952.html
+src/app/accueil/accueil.component_BASE_14952.html
+src/app/accueil/accueil.component_LOCAL_14952.html
+src/app/accueil/accueil.component_BACKUP_14952.html

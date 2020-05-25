@@ -15,10 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 
 export class TacheDetailsComponent implements OnInit {
 
-	edit: boolean;
-  tache: Tache;
-  categories: Categorie[];
-
+	edit1: boolean;
 	edition:boolean;
 	tache: Tache;
 	categories: Categorie[];
@@ -36,22 +33,22 @@ export class TacheDetailsComponent implements OnInit {
 		if (this.edition)
 			this.tache = this.service.getTache(parseInt(id));
 		else
-			this.tache={id:this.service.getLastIdTache()+1, nom:null, idCategorie:0, heureDebut:"", duree:"", dateDebut:""};
+			this.tache={id:this.service.getLastIdTache()+1, enCours:true, nom:null, idCategorie:0, heureDebut:"", duree:"", dateDebut:""};
 	}
-  
-  getTache(): void {
-  const id = this.route.snapshot.paramMap.get('id');
-  let idNum = parseInt(id) 
-	this.edit = id!=null;
-	if (this.edit)
-		this.tache = this.service.getTache(idNum);
-  }
+	  
+	getTache(): void {
+		const id = this.route.snapshot.paramMap.get('id');
+		let idNum = parseInt(id) 
+		this.edit1 = id!=null;
+		if (this.edit)
+			this.tache = this.service.getTache(idNum);
+	  }
 
 
 	add(nomTache: string, catId: number): void {
 		nomTache = nomTache.trim();
 		if (!nomTache) { return; }
-		let t:Tache = {id:this.service.getLastIdTache()+1, nom:nomTache, idCategorie:catId, heureDebut: this.service.getTimeNow(), duree:"", dateDebut: this.service.getDateNow()};
+		let t:Tache = {id:this.service.getLastIdTache()+1, nom:nomTache, idCategorie:catId, enCours:true, heureDebut: this.service.getTimeNow(), duree:"", dateDebut: this.service.getDateNow()};
 		this.service.addTache(t);
 		this.router.navigateByUrl('/accueil');
 	}
@@ -59,7 +56,7 @@ export class TacheDetailsComponent implements OnInit {
 	edit(nomTache: string, catId: number, heureDebut:string, duree: string, dateDebut:string): void {
 		nomTache = nomTache.trim();
 		if (!nomTache) { return; }
-		this.service.editTache({id:this.tache.id, nom:nomTache, idCategorie:catId, heureDebut: heureDebut, duree:duree, dateDebut: dateDebut});
+		this.service.editTache({id:this.tache.id, nom:nomTache, idCategorie:catId, enCours:true, heureDebut: heureDebut, duree:duree, dateDebut: dateDebut});
 		this.router.navigateByUrl('/accueil');
 	}
 }
